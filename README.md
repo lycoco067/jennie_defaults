@@ -17,7 +17,7 @@ Gemfile에 추가:
 
 ```ruby
 # GitHub에서 직접
-gem "jennie_defaults", git: "https://github.com/jenniesu/jennie_defaults.git"
+gem "jennie_defaults", git: "https://github.com/lycoco067/jennie_defaults.git"
 
 # 또는 로컬 개발용
 gem "jennie_defaults", path: "~/develop/jennie_defaults"

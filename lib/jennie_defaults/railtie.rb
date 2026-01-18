@@ -56,18 +56,12 @@ module JennieDefaults
     # ═══════════════════════════════════════
     # Generator 기본값
     # ═══════════════════════════════════════
-    config.generators do |g|
+    config.app_generators do |g|
       g.test_framework :minitest
       g.system_tests nil
       g.stylesheets false
       g.helper false
       g.jbuilder false
-    end
-
-    # Generator 경로 등록
-    generators do
-      require_relative "../generators/service/service_generator"
-      require_relative "../generators/form_object/form_object_generator"
     end
   end
 end

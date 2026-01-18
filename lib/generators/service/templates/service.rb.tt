@@ -1,0 +1,43 @@
+# frozen_string_literal: true
+
+class <%= class_name %>Service
+  class Error < StandardError; end
+
+<% if methods.any? -%>
+  def initialize(<%= methods.map { |m| "#{m}:" }.join(", ") %>)
+<% methods.each do |method| -%>
+    @<%= method %> = <%= method %>
+<% end -%>
+  end
+<% else -%>
+  def initialize
+  end
+<% end -%>
+
+  def call
+    # TODO: implement service logic
+    Result.new(success: true, data: nil)
+  end
+
+  # Shorthand: <%= class_name %>Service.call(...)
+  def self.call(...)
+    new(...).call
+  end
+
+  private
+
+<% methods.each do |method| -%>
+  attr_reader :<%= method %>
+<% end -%>
+
+  # Result object for consistent return values
+  Result = Struct.new(:success, :data, :error, keyword_init: true) do
+    def success?
+      success
+    end
+
+    def failure?
+      !success
+    end
+  end
+end

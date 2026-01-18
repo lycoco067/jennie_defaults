@@ -1,0 +1,34 @@
+# frozen_string_literal: true
+
+class <%= class_name %>Form
+  include ActiveModel::Model
+  include ActiveModel::Attributes
+
+<% parsed_attributes.each do |attr| -%>
+  attribute :<%= attr[:name] %>, :<%= attr[:type] %>
+<% end -%>
+
+<% if parsed_attributes.any? -%>
+<% parsed_attributes.each do |attr| -%>
+  validates :<%= attr[:name] %>, presence: true
+<% end -%>
+<% end -%>
+
+  def save
+    return false unless valid?
+
+    # TODO: implement save logic
+    # ActiveRecord::Base.transaction do
+    #   ...
+    # end
+
+    true
+  rescue ActiveRecord::RecordInvalid => e
+    errors.add(:base, e.message)
+    false
+  end
+
+  def persisted?
+    false
+  end
+end

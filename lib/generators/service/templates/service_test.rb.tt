@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+class <%= class_name %>ServiceTest < ActiveSupport::TestCase
+  test "returns success result" do
+<% if methods.any? -%>
+    result = <%= class_name %>Service.call(<%= methods.map { |m| "#{m}: nil" }.join(", ") %>)
+<% else -%>
+    result = <%= class_name %>Service.call
+<% end -%>
+
+    assert result.success?
+    # assert_equal expected, result.data
+  end
+
+  test "handles error case" do
+    # Setup error condition
+<% if methods.any? -%>
+    # result = <%= class_name %>Service.call(<%= methods.map { |m| "#{m}: nil" }.join(", ") %>)
+<% else -%>
+    # result = <%= class_name %>Service.call
+<% end -%>
+
+    # assert result.failure?
+    # assert_equal "error message", result.error
+  end
+end

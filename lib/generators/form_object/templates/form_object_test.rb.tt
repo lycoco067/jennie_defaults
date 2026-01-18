@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+class <%= class_name %>FormTest < ActiveSupport::TestCase
+<% if parsed_attributes.any? -%>
+  test "valid with all attributes" do
+    form = <%= class_name %>Form.new(
+<% parsed_attributes.each_with_index do |attr, i| -%>
+      <%= attr[:name] %>: "test"<%= i < parsed_attributes.length - 1 ? ',' : '' %>
+<% end -%>
+    )
+
+    assert form.valid?
+  end
+
+<% parsed_attributes.each do |attr| -%>
+  test "invalid without <%= attr[:name] %>" do
+    form = <%= class_name %>Form.new(<%= attr[:name] %>: nil)
+
+    assert_not form.valid?
+    assert_includes form.errors[:<%= attr[:name] %>], "can't be blank"
+  end
+
+<% end -%>
+  test "saves successfully" do
+    form = <%= class_name %>Form.new(
+<% parsed_attributes.each_with_index do |attr, i| -%>
+      <%= attr[:name] %>: "test"<%= i < parsed_attributes.length - 1 ? ',' : '' %>
+<% end -%>
+    )
+
+    assert form.save
+  end
+<% else -%>
+  test "valid without attributes" do
+    form = <%= class_name %>Form.new
+
+    assert form.valid?
+  end
+
+  test "saves successfully" do
+    form = <%= class_name %>Form.new
+
+    assert form.save
+  end
+<% end -%>
+end
